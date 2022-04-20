@@ -14,7 +14,7 @@ void b_write(Adress adr, byte b);
 byte b_read(Adress adr);
 void w_write(Adress adr, word w);
 word w_read(Adress adr);
-void load_file();
+void load_file(const char * filename);
 
 void test_mem()
 {
@@ -24,7 +24,7 @@ void test_mem()
     byte b_test_1 = 0x0a;
     b_write(adr_test_1, b_test_1);
     byte bres_test_1 = b_read(adr_test_1);
-    printf ("byte_write/byte_read \t %02hhx == %02hhx\n", b_test_1, bres_test_1);
+    //printf ("byte_write/byte_read \t %02hhx == %02hhx\n", b_test_1, bres_test_1);
     assert (b_test_1 == bres_test_1);
 
     // Test 2:
@@ -33,7 +33,7 @@ void test_mem()
     word w_test_2 = 0x0bac;
     w_write(adr_test_2, w_test_2);
     word wres_test_2 = w_read(adr_test_2);
-    printf("word_write/word_read \t %04hx == %04hx\n", wres_test_2, w_test_2);
+    //printf("word_write/word_read \t %04hx == %04hx\n", wres_test_2, w_test_2);
     assert(w_test_2 == wres_test_2);
 
     // Test 3:
@@ -44,7 +44,7 @@ void test_mem()
     byte b0res_test_3 = b_read(adr_test_3);
     byte b1res_test_3 = b_read(adr_test_3 + 1);
     word wres_test_3 = (b1res_test_3 << 8)|b0res_test_3;
-    printf("word_write/byte_read \t %04hx == %04hx\n", w_test_3, wres_test_3);
+    //printf("word_write/byte_read \t %04hx == %04hx\n", w_test_3, wres_test_3);
     assert(w_test_3 == wres_test_3);
 
     // Test 4:
@@ -56,7 +56,7 @@ void test_mem()
     b_write(adr_test_4, b0_test_4);
     b_write(adr_test_4 + 1, b1_test_4);
     word wres_test_4 = w_read(adr_test_4);
-    printf("byte_write/word_read \t %04hx == %02hhx%02hhx\n", wres_test_4, b1_test_4, b0_test_4);
+    //printf("byte_write/word_read \t %04hx == %02hhx%02hhx\n", wres_test_4, b1_test_4, b0_test_4);
     assert(w_test_4 == wres_test_4);
 
     // Test 5:
@@ -71,9 +71,20 @@ void test_mem()
 
 }
 
+void test_load()
+{
+    unsigned int list_byte[] = {0xc0, 0x65, 0x7a, 0x00, 0x3f, 0x10, 0xf8, 0x01, 0x00, 0x00, 0x76, 0x0f};
+    for (int i = 0; i < 10; i++)
+    {
+        //printf("%02x == %02x\n", b_read(512 + i), list_byte[i]);
+        assert(b_read(0x0200 + i) == list_byte[i]);
+    }
+}
+
 int main(){
     test_mem();
-    load_file();
+    load_file("data.txt");
+    test_load();
     return 0;
 }
 
@@ -106,20 +117,22 @@ word w_read(Adress adr)
     return w;
 }
 
-void load_file()
+void load_file(const char * filename)
 {
-    FILE * fin  = fopen("data.txt", "r");
+    FILE * fin  = fopen(filename, "r");
 
-    Adress adr_start_block;
-    int number_byte;
-    byte now_byte;
-    while (fscanf ("%x %x", &adr_start_block, &number_byte) == 2)
+    unsigned int adr_start_block, now_byte, number_byte, i;
+
+    while (fscanf (fin, "%x %x", &adr_start_block, &number_byte) == 2)
     {
-        for (int i = 0; i < number_byte; i++)
+        //printf("%x\n", number_byte);
+        for (i = 0; i < number_byte; i++)
             {
-                scanf ("%x", &now_byte);
+                fscanf (fin, "%x", &now_byte);
                 b_write (adr_start_block, now_byte);
                 adr_start_block++;
+                //printf("%d\n", i);
+                //printf("Yes\n");
             }
     }
     fclose(fin);
