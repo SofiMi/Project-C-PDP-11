@@ -81,9 +81,9 @@ void test_load()
     }
 }
 
-int main(){
+int main(int argc, char* argv[]){
     test_mem();
-    load_file("data.txt");
+    load_file(argv[1]);
     test_load();
     return 0;
 }
