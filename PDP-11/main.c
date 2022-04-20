@@ -40,7 +40,7 @@ void test_mem()
     word w_test_3 = 0x0b0c;
     w_write(adr_test_3, w_test_3);
     byte b0res_test_3 = b_read(adr_test_3);
-    byte b1res_test_3 = b_read(adr_test_3 + 1);
+    byte b1res_test_3 = b_read(adr_test_3 + 2);
     word wres_test_3 = (b1res_test_3 << 8)|b0res_test_3;
     printf("word_write/byte_read \t %04hx == %04hx\n", w_test_3, wres_test_3);
     assert(w_test_3 == wres_test_3);
@@ -52,10 +52,23 @@ void test_mem()
     byte b0_test_4 = 0x0a;
     word w_test_4 = 0x0b0a;
     b_write(adr_test_4, b0_test_4);
-    b_write(adr_test_4 + 1, b1_test_4);
+    b_write(adr_test_4 + 2, b1_test_4);
     word wres_test_4 = w_read(adr_test_4);
     printf("byte_write/word_read \t %04hx == %02hhx%02hhx\n", wres_test_4, b1_test_4, b0_test_4);
     assert(w_test_4 == wres_test_4);
+
+    // Тест 5:
+    // Проверяем неработоспособность программы при написании нечетного адреса
+    Adress adr_test_5 = 7;
+    byte b_test_5 = 0x0a;
+    word w_test_5 = 0x0b0a;
+    // Комментируем, чтобы не пугаться каждый раз:
+    // если мы напишем нечетный адрес, то программа сразу нам об этом скажет
+    //b_write(adr_test_5, b_test_5);
+    //b_read(adr_test_5);
+    //w_write(adr_test_5, w_test_5);
+    //w_read(adr_test_5);
+
 }
 
 int main(){
@@ -65,26 +78,29 @@ int main(){
 
 void b_write(Adress adr, byte b)
 {
+    assert(0 == adr % 2);
     mem[adr] = b;
 }
 
 byte b_read(Adress adr)
 {
+    assert(0 == adr % 2);
     return mem[adr];
 }
 
 void w_write(Adress adr, word w)
 {
    // Записываем в первый байт
-   b_write(adr + 1, w >> 8);
+   b_write(adr + 2, w >> 8);
    // Записываем во второй байт
    b_write(adr, w & 0xFF);
 }
 
 word w_read(Adress adr)
 {
+    assert(0 == adr % 2);
     // Читаем первый байт
-    word w = ((word)mem[adr + 1]) << 8;
+    word w = ((word)mem[adr + 2]) << 8;
     // Читаем второй байт
     w = w | mem[adr];
     return w;
