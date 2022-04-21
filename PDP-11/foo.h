@@ -15,3 +15,4 @@ word w_read(Adress adr);
 void load_file(const char * filename);
 void test_mem();
 void test_load();
+trace(const char *format, ...);
