@@ -1,8 +1,14 @@
+#include <errno.h>
 #include "foo.h"
 
 void load_file(const char * filename)
 {
     FILE * fin  = fopen(filename, "r");
+
+    if (fin == NULL) {
+        perror("data.txt");
+        exit(errno);
+    }
 
     unsigned int adr_start_block, now_byte, number_byte, i;
 

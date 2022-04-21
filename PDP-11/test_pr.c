@@ -60,8 +60,7 @@ void test_load()
     unsigned int list_byte[] = {0xc0, 0x65, 0x7a, 0x00, 0x3f, 0x10, 0xf8, 0x01, 0x00, 0x00, 0x76, 0x0f};
     for (int i = 0; i < 10; i++)
     {
-        printf("%02x == %02x\n", b_read(512 + i), list_byte[i]);
+        //printf("%02x == %02x\n", b_read(512 + i), list_byte[i]);
         assert(b_read(0x0200 + i) == list_byte[i]);
     }
 }
-
