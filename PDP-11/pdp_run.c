@@ -9,6 +9,15 @@ void do_halt(){
     exit(0);
 }
 
+typedef struct {
+    word mask;
+    word opcode;
+    char * name;
+
+} Command;
+
+Command cmd[] = {};
+
 void run()
 {
     pc = 01000;

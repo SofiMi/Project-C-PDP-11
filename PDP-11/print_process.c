@@ -1,7 +1,7 @@
 #include "foo.h"
 #include <stdarg.h>
 
-trace(const char *format, ...)
+void trace(const char *format, ...)
 {
     va_list argptr;
     va_start(argptr, format);
