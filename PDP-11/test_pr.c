@@ -24,12 +24,14 @@ void test_mem()
     // Write word, read 2 byte
     Adress adr_test_3 = 6;
     word w_test_3 = 0x0b0c;
+    byte b0_test_3 = 0x0c;
+    byte b1_test_3 = 0x0b;
     w_write(adr_test_3, w_test_3);
     byte b0res_test_3 = b_read(adr_test_3);
     byte b1res_test_3 = b_read(adr_test_3 + 1);
-    word wres_test_3 = (b1res_test_3 << 8)|b0res_test_3;
     //printf("word_write/byte_read \t %04hx == %04hx\n", w_test_3, wres_test_3);
-    assert(w_test_3 == wres_test_3);
+    assert(b0_test_3 == b0res_test_3);
+    assert(b1_test_3 == b1res_test_3);
 
     // Test 4:
     // Write 2 byte - write word
