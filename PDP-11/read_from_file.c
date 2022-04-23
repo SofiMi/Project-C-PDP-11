@@ -6,7 +6,7 @@ void load_file(const char * filename)
     FILE * fin  = fopen(filename, "r");
 
     if (fin == NULL) {
-        perror("data.txt");
+        perror(filename);
         exit(errno);
     }
 
