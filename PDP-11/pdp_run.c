@@ -27,19 +27,27 @@ Command cmd[] = {
     {0177700, 0105200, "incb", do_incb}, //b052dd
     {0170000, 0110000, "movb", do_movb},
     {0177777, 0000000, "halt", do_halt},
-    {0000000, 0000000, "nothing", do_nothing}
+    {0000000, 0000000, "unknow", do_nothing},
+    {0000000, 0000000, "exit", do_nothing}
 };
 
 void run()
 {
     pc = 01000;
-    for(int i = 0; cmd[i].name != "nothing"; i++)
+    while (1)
     {
         word w = w_read(pc);
         trace("%06o %06o: ", pc, w);
         pc += 2;
-        trace("%s \n",cmd[i].name);
-        cmd[i].do_func;
+        for(int i = 0; cmd[i].name != "exit"; i++)
+        {
+            if ((w & cmd[i].mask) == cmd[i].opcode)
+            {
+                trace("%s \n",cmd[i].name);
+                cmd[i].do_func();
+                break;
+            }
+        }
     }
 }
 
