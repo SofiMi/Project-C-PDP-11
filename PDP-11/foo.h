@@ -17,3 +17,4 @@ void test_mem();
 void test_load();
 void trace(const char *format, ...);
 void run();
+
