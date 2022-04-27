@@ -1,2 +1,1 @@
-h
-
+#include "foo.h"
