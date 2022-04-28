@@ -30,6 +30,7 @@ void run()
                 ss = mode_reg(w >> 6); //!!!
                 dd = mode_reg(w);
                 cmd[i].do_func();
+                trace("[%o] = %o", pc - 2, ss.val);
                 trace("\n");
                 break;
             }

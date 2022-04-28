@@ -2,33 +2,6 @@
 
 word reg[8];
 
-void b_write_reg(Adress adr, byte b)
-{
-    reg[adr] = b;
-}
-
-byte b_read_reg(Adress adr)
-{
-    return reg[adr];
-}
-
-void w_write_reg(Adress adr, word w)
-{
-   // Write to the 1 byte
-   b_write_reg(adr + 1, w >> 8);
-   // Write to the 2 byte
-   b_write_reg(adr, w & 0xFF);
-}
-
-word w_read_reg(Adress adr)
-{
-    // Read to the 1 byte
-    word w = ((word)reg[adr + 1]) << 8;
-    // Read to the 2 byte
-    w = w | reg[adr];
-    return w;
-}
-
 Arg mode_reg(word w)
 {
     Arg res;
@@ -70,6 +43,7 @@ Arg mode_reg(word w)
 void trace_all(void)
 {
     for(int i = 0; i < 7; i++)
-        trace("R%d %o  ", i, reg[i]);
+        trace("R%d %06o  ", i, reg[i]);
+    trace ("pc %06o", reg[7]);
     trace("\n");
 }
