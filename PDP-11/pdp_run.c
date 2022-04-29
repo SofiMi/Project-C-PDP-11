@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 extern Arg ss, dd, nn, r;
+extern char byte_n;
 extern word reg[8];
 #define pc reg[7]
 
@@ -30,6 +31,7 @@ void run()
             if ((w & cmd[i].mask) == cmd[i].opcode)
             {
                 trace("%s ",cmd[i].name);
+                byte_n = (w >> 15);
                 if ((cmd[i].params >> 1) & 1) // XX R NN SS DD
                     ss = mode_reg(w >> 6); //!!!
                 if (cmd[i].params & 1)

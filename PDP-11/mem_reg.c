@@ -1,6 +1,7 @@
 #include "foo.h"
 
 word reg[8];
+extern char byte_n;
 
 Arg mode_reg(word w)
 {
@@ -17,15 +18,26 @@ Arg mode_reg(word w)
 
         case 1: // (R3)
             res.adr = reg[r];
-            res.val = w_read(res.adr); //!!! b_read
+            if (byte_n)
+                res.val = b_read(res.adr);
+            else
+                res.val = w_read(res.adr); //!!! b_read
             trace("(R%o) ", r);
             res.mode = 1;
             break;
 
         case 2: // (R3)+ #3
             res.adr = reg[r];
-            res.val = w_read(res.adr); //!!! b_read
-            reg[r] += 2;
+            if (byte_n)
+            {
+                res.val = b_read(res.adr); //!!! b_read
+                reg[r] += 1;
+            }
+            else
+            {
+                res.val = w_read(res.adr);
+                reg[r] += 2;
+            }
             res.mode = 2;
             if (r == 7)
                 trace("#%o ", res.val);
