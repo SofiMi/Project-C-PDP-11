@@ -33,6 +33,14 @@ Arg mode_reg(word w)
                 trace("(R%o)+", r);
             break;
 
+        case 3:
+            res.adr = reg[r];
+            res.adr = w_read(res.adr);
+            res.val = w_read(res.adr);
+            reg[r] += 2;
+            trace("@(R%o)+ ", r);
+            break;
+
         default:
             fprintf(stderr, "Mode %o NOT IMPLEMENTED YET!!!\n", mode);
             exit(1);
