@@ -31,3 +31,6 @@ void w_write_reg(Adress adr, word w);
 word w_read_reg(Adress adr);
 Arg mode_reg(word w);
 
+Arg get_N(word w);
+Arg get_R(word w);
+

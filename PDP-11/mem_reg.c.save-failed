@@ -43,16 +43,7 @@ Arg mode_reg(word w)
 Arg get_N(word w)
 {
     Arg res;
-    res.val =  w & 63;
-    return res;
-}
-
-Arg get_R(word w)
-{
-    Arg res;
-    res.adr = (w >> 6) & 7;
-    res.val =  reg[(w >> 6) & 7];
-    printf ("\n word = %o res = %o", w, res.val);
+    res.val =  w & 7;
     return res;
 }
 

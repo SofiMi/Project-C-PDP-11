@@ -1,5 +1,5 @@
 #include "foo.h"
-Arg ss, dd;
+Arg ss, dd, nn, r;
 
 extern word reg[8];
 #define pc reg[7]
@@ -48,16 +48,16 @@ void do_movb(){}
 void do_nothing(){}
 
 void do_sob(){
-    if (dd.mode == 0)
+    //printf ("\n I am%o\n", r.val);
+    if (r.val != 0)
     {
-        reg[dd.adr] = ss.val;
+        pc = pc - nn.val*2;
+        r.val -= 1;
+        reg[r.adr] -= 1;
     }
-    else if (dd.mode == 1)
-    {
-        w_write(dd.adr, ss.val);
-    }
-    else if (dd.mode == 2)
-    {
-        reg[dd.adr] = ss.val;
-    }
+}
+
+void do_clr(){
+    printf ("\n I am%o\n", dd.adr);
+    reg[dd.adr] = 0;
 }
