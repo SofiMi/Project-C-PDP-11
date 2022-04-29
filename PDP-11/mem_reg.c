@@ -52,7 +52,7 @@ Arg get_R(word w)
     Arg res;
     res.adr = (w >> 6) & 7;
     res.val =  reg[(w >> 6) & 7];
-    printf ("\n word = %o res = %o", w, res.val);
+    //printf ("\n word = %o res = %o", w, res.val);
     return res;
 }
 

@@ -49,15 +49,14 @@ void do_nothing(){}
 
 void do_sob(){
     //printf ("\n I am%o\n", r.val);
+    r.val -= 1;
+    reg[r.adr] -= 1;
     if (r.val != 0)
     {
         pc = pc - nn.val*2;
-        r.val -= 1;
-        reg[r.adr] -= 1;
     }
 }
 
 void do_clr(){
-    printf ("\n I am%o\n", dd.adr);
     reg[dd.adr] = 0;
 }
