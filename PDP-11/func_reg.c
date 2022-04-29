@@ -46,3 +46,18 @@ void do_add(){
 void do_incb(){}
 void do_movb(){}
 void do_nothing(){}
+
+void do_sob(){
+    if (dd.mode == 0)
+    {
+        reg[dd.adr] = ss.val;
+    }
+    else if (dd.mode == 1)
+    {
+        w_write(dd.adr, ss.val);
+    }
+    else if (dd.mode == 2)
+    {
+        reg[dd.adr] = ss.val;
+    }
+}

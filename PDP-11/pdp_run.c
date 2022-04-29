@@ -10,6 +10,7 @@ typedef struct {
     word opcode;
     char * name;
     void (* do_func)();
+    char params;
 } Command;
 
 extern Command cmd[];
@@ -27,8 +28,10 @@ void run()
             if ((w & cmd[i].mask) == cmd[i].opcode)
             {
                 trace("%s ",cmd[i].name);
-                ss = mode_reg(w >> 6); //!!!
-                dd = mode_reg(w);
+                if ((cmd[i].params >> 1) & 1)
+                    ss = mode_reg(w >> 6); //!!!
+                if (cmd[i].params & 1)
+                    dd = mode_reg(w);
                 cmd[i].do_func();
                 trace("[%o] = %o", pc - 2, ss.val);
                 trace("\n");
