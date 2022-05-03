@@ -15,7 +15,7 @@ typedef struct {
     word opcode;
     char * name;
     void (* do_func)();
-    char params; //???
+    char params;
 } Command;
 
 Command cmd[] = {
