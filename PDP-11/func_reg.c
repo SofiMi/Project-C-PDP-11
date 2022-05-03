@@ -20,7 +20,6 @@ void get_flag_N(word w_res)
 }
 void get_flag_Z(word w_res)
 {
-    printf("Start get_flag_Z\n");
     if (w_res == 0)
         flag_Z = 1;
     else
@@ -129,11 +128,11 @@ void do_clr(){
 }
 
 void do_br(){
-    trace ("XX = %o", pc - 2* xx.adr);
-    pc = pc - 2* xx.adr;
+    trace ("XX = %o", pc + 2 * xx.adr);
+    pc = pc + 2* xx.adr;
 }
 
 void do_beq(){
     if (flag_Z == 1)
-        do_halt();
+        do_br();
 }

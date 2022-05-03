@@ -82,7 +82,7 @@ Arg get_XX(word w)
     res.adr = w & 255;
     if ((res.adr >> 7 & 1) == 1)
     {
-        res.adr = 256 - res.adr;
+        res.adr = (256 - res.adr) * (-1);
     }
     return res;
 }
