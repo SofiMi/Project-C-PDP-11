@@ -9,7 +9,7 @@ extern word reg[8];
 void get_flag_N(word w_res)
 {
     printf("\nStart get_flag_N\n");
-    printf ("%d", w_res);
+    printf ("\nres = %d", w_res);
     if ((w_res & 1 << 15) == 1 << 15)
         {
             flag_N = 1;
@@ -20,6 +20,7 @@ void get_flag_N(word w_res)
 }
 void get_flag_Z(word w_res)
 {
+    printf ("\nres = %d", w_res);
     if (w_res == 0)
         flag_Z = 1;
     else
@@ -110,6 +111,7 @@ void do_movb(){
             w = ss.val;
         reg[dd.adr] = w;
     }
+    get_flag_Z(ss.val);
 }
 void do_nothing(){}
 
