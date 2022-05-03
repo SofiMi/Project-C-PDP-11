@@ -53,6 +53,21 @@ Arg mode_reg(word w)
             trace("@(R%o)+ ", r);
             break;
 
+        case 4:
+            if (byte_n)
+            {
+                reg[r] -= 1;
+            }
+            else
+            {
+                reg[r] -= 2;
+            }
+            res.adr = reg[r];
+            res.val = w_read(res.adr);
+            res.mode = 4;
+            trace("-(Rn)");
+            break;
+
         default:
             fprintf(stderr, "Mode %o NOT IMPLEMENTED YET!!!\n", mode);
             exit(1);

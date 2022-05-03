@@ -45,7 +45,7 @@ void do_mov(){
     {
         reg[dd.adr] = ss.val;
     }
-    else if (dd.mode == 1)
+    else if ((dd.mode == 1) || (dd.mode == 4))
     {
         w_write(dd.adr, ss.val);
     }
