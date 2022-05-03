@@ -1,9 +1,39 @@
 #include "foo.h"
-Arg ss, dd, nn, r;
+Arg ss, dd, nn, r, xx;
 char byte_n;
+char flag_N, flag_Z, flag_C;
 
 extern word reg[8];
 #define pc reg[7]
+
+void get_flag_N(word w_res)
+{
+    printf("\nStart get_flag_N\n");
+    printf ("%d", w_res);
+    if ((w_res & 1 << 15) == 1 << 15)
+        {
+            flag_N = 1;
+            printf ("Yes");
+        }
+    else
+       flag_N = 0;
+}
+void get_flag_Z(word w_res)
+{
+    printf("Start get_flag_Z\n");
+    if (w_res == 0)
+        flag_Z = 1;
+    else
+       flag_Z = 0;
+}
+void get_flag_C(word w_res)
+{
+    printf("Start get_flag_C\n");
+    if ((w_res >> 15) >= 2)
+        flag_C = 1;
+    else
+       flag_C = 0;
+}
 
 void do_halt(){
     trace("THE END\n");
@@ -24,24 +54,31 @@ void do_mov(){
     {
         reg[dd.adr] = ss.val;
     }
+    get_flag_Z(ss.val);
 }
 
 void do_add(){
+    word sum;
     if (dd.mode == 0)
     {
-        word sum = ss.val + reg[dd.adr];
+        sum = ss.val + reg[dd.adr];
         reg[dd.adr] = sum;
     }
     else if (dd.mode == 2)
     {
-        word sum = ss.val + reg[dd.adr];
+        sum = ss.val + reg[dd.adr];
         reg[dd.adr] = sum;
     }
     else if (dd.mode == 1)
     {
-        word sum = ss.val + w_read(dd.adr);
+        sum = ss.val + w_read(dd.adr);
         w_write(dd.adr, sum);
     }
+    /*get_flag_N(sum);
+    get_flag_Z(sum);
+    get_flag_C(sum);
+
+    printf("\nN = %d Z = %d C = %d \n", flag_N, flag_Z, flag_C);*/
 }
 
 void do_incb(){}
@@ -89,4 +126,14 @@ void do_sob(){
 
 void do_clr(){
     reg[dd.adr] = 0;
+}
+
+void do_br(){
+    trace ("XX = %o", pc - 2* xx.adr);
+    pc = pc - 2* xx.adr;
+}
+
+void do_beq(){
+    if (flag_Z == 1)
+        do_halt();
 }

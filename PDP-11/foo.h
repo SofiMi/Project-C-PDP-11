@@ -33,4 +33,9 @@ Arg mode_reg(word w);
 
 Arg get_N(word w);
 Arg get_R(word w);
+Arg get_XX(word w);
+
+void get_flag_N(word w_res);
+void get_flag_Z(word w_res);
+void get_flag_C(word w_res);
 

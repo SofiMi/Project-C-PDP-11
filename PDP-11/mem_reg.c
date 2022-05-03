@@ -76,6 +76,17 @@ Arg get_R(word w)
     return res;
 }
 
+Arg get_XX(word w)
+{
+    Arg res;
+    res.adr = w & 255;
+    if ((res.adr >> 7 & 1) == 1)
+    {
+        res.adr = 256 - res.adr;
+    }
+    return res;
+}
+
 void trace_all(void)
 {
     for(int i = 0; i < 7; i++)

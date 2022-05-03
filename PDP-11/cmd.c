@@ -7,6 +7,8 @@ extern void do_movb();
 extern void do_nothing();
 extern void do_sob();
 extern void do_clr();
+extern void do_br();
+extern void do_beq();
 
 typedef struct {
     word mask;
@@ -24,6 +26,8 @@ Command cmd[] = {
     {0177777, 0000000, "halt", do_halt, 0},
     {0177000, 0077000, "sob", do_sob, 12},
     {0177700, 0005000, "clr", do_clr, 1},
+    {0177400, 0000400, "br", do_br, 16}, // 0177400 так как хотим узнать лишь про 1
+    {0177700, 0001400, "beq", do_beq, 16},
     {0000000, 0000000, "unknow", do_nothing, 0},
     {0000000, 0000000, "exit", do_nothing, 0}
 };
