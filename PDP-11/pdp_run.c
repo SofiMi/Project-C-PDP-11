@@ -43,12 +43,9 @@ void run()
                 if ((cmd[i].params >> 3) & 1)
                     r = get_R(w);
                 if ((cmd[i].params >> 4) & 1)
-                    {
-                        xx = get_XX(w);
-                    }
+                    xx = get_XX(w);
                 cmd[i].do_func();
                 //trace_all();
-                //trace("[%o] = %o", pc - 2, ss.val);
                 trace("\n");
                 break;
             }

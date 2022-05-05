@@ -92,7 +92,7 @@ void do_movb(){
             w = ss.val;
         reg[dd.adr] = w;
     }
-    else if (dd.mode == 1)
+    else if (dd.mode == 1 || dd.mode == 3)
     {
         word w;
         if (ss.val >> 7)
@@ -111,6 +111,7 @@ void do_movb(){
         reg[dd.adr] = w;
     }
     get_flag_Z(ss.val);
+    get_flag_N(ss.val);
 }
 void do_nothing(){}
 
@@ -138,4 +139,15 @@ void do_beq(){
         do_br();
     else
         trace ("%o", (pc + 2 * xx.adr) & 0177777);
+}
+
+void do_bpl(){
+    trace ("bpl_not");
+}
+
+void do_tstb(){
+    trace ("%o", dd.adr);
+    flag_C = 0;
+    flag_N = b_read(dd.adr);
+    flag_Z = b_read(dd.adr + 1);
 }

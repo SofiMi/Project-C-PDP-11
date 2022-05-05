@@ -50,7 +50,11 @@ Arg mode_reg(word w)
             res.adr = w_read(res.adr);
             res.val = w_read(res.adr);
             reg[r] += 2;
-            trace("@(R%o)+ ", r);
+            res.mode = 3;
+            if (r == 7)
+                trace("#%o ", res.adr);
+            else
+                trace("@(R%o)+ ", r);
             break;
 
         case 4:
