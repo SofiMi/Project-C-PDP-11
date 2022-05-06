@@ -2,12 +2,14 @@
 
 word reg[8];
 extern char byte_n;
+#define pc reg[7]
 
 Arg mode_reg(word w)
 {
     Arg res;
     int r = w & 7;
     int mode = (w >> 3) & 7;
+    int x;
     switch(mode) {
         case 0: // R3
             res.adr = r;
@@ -40,7 +42,11 @@ Arg mode_reg(word w)
             }
             res.mode = 2;
             if (r == 7)
-                trace("#%o ", res.val);
+                {
+                    trace("#%o ", res.val);
+                    if (byte_n)
+                        reg[r] += 1; // !!!
+                }
             else
                 trace("(R%o)+", r);
             break;
@@ -70,6 +76,15 @@ Arg mode_reg(word w)
             res.val = w_read(res.adr);
             res.mode = 4;
             trace("-(Rn)");
+            break;
+
+        case 6:
+            x = w_read(pc);
+            pc += 2;
+            res.adr = x + reg[r];
+            res.val = w_read(res.adr);
+            trace("%o", res.adr);
+            res.mode = 6;
             break;
 
         default:

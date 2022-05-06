@@ -90,7 +90,7 @@ void do_movb(){
             w = ss.val;
         reg[dd.adr] = w;
     }
-    else if (dd.mode == 1 || dd.mode == 3)
+    else if (dd.mode == 1 || dd.mode == 3 || dd.mode == 6)
     {
         word w;
         if (ss.val >> 7)
