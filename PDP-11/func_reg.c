@@ -8,8 +8,6 @@ extern word reg[8];
 
 void get_flag_N(word w_res)
 {
-    printf("\nStart get_flag_N\n");
-    printf ("\nres = %d", w_res);
     if ((w_res & 1 << 15) == 1 << 15)
         {
             flag_N = 1;
@@ -112,6 +110,9 @@ void do_movb(){
     }
     get_flag_Z(ss.val);
     get_flag_N(ss.val);
+
+    if (dd.adr == 0177566)
+        printf("%c", w_read(dd.adr));
 }
 void do_nothing(){}
 
@@ -142,12 +143,15 @@ void do_beq(){
 }
 
 void do_bpl(){
-    trace ("bpl_not");
+    if (flag_N == 1)
+        do_br();
+    else
+        trace ("%o", (pc + 2 * xx.adr) & 0177777);
 }
 
 void do_tstb(){
-    trace ("%o", dd.adr);
     flag_C = 0;
-    flag_N = b_read(dd.adr);
-    flag_Z = b_read(dd.adr + 1);
+    if (dd.adr == 0177564)
+        flag_N = 0;
+    flag_Z = b_read(dd.adr);
 }

@@ -52,7 +52,7 @@ Arg mode_reg(word w)
             reg[r] += 2;
             res.mode = 3;
             if (r == 7)
-                trace("#%o ", res.adr);
+                trace("@#%o ", res.adr);
             else
                 trace("@(R%o)+ ", r);
             break;
