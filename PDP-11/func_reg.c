@@ -155,3 +155,19 @@ void do_tstb(){
         flag_N = 0;
     flag_Z = b_read(dd.adr);
 }
+
+void do_jsr(){
+    //printf("r.val = %o, r.adr = %o, reg[r.val] = %o\n ", r.val, r.adr, reg[r.val]);
+    word temp = dd.adr;
+    w_write(reg[6], r.val);
+    reg[6] += 2;
+    reg[r.adr] = pc;
+    pc = temp;
+}
+
+void do_rts(){
+    //printf("r.val = %o, r.adr = %o", r.val, r.adr);
+    reg[6] -= 2;
+    pc = reg[r.adr];
+    reg[7] = w_read(reg[6]);
+}
