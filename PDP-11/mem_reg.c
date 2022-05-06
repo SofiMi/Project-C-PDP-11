@@ -48,7 +48,7 @@ Arg mode_reg(word w)
                         reg[r] += 1; // !!!
                 }
             else
-                trace("(R%o)+", r);
+                trace("(R%o)+ ", r);
             break;
 
         case 3:
@@ -75,7 +75,7 @@ Arg mode_reg(word w)
             res.adr = reg[r];
             res.val = w_read(res.adr);
             res.mode = 4;
-            trace("-(Rn)");
+            trace("-(Rn) ");
             break;
 
         case 6:
@@ -83,7 +83,10 @@ Arg mode_reg(word w)
             pc += 2;
             res.adr = x + reg[r];
             res.val = w_read(res.adr);
-            trace("%o", res.adr);
+            if (r == 7)
+                trace("%o ", res.adr);
+            else
+                trace("%o(R%o) ", x, r);
             res.mode = 6;
             break;
 
